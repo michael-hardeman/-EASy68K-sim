@@ -11,3 +11,18 @@ and sound. This could be added back by rending the graphics and sound to either 
 This application is good enough for my needs so I stopped here.
 
 It shouldn't be too much work to add that stuff back if you're willing to take a shot.
+
+Building
+--------
+
+    make
+
+Installing
+----------
+
+    sudo make install
+
+Uninstall
+---------
+
+    sudo make uninstall

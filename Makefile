@@ -29,3 +29,6 @@ distclean: clean
 
 install: $(TARGET)
 	install -m 755 $(TARGET) $(DESTDIR)$(PREFIX)/bin
+
+uninstall: $(TARGET)
+	rm $(DESTDIR)$(PREFIX)/bin/$(TARGET)
