@@ -44,7 +44,8 @@ void runLoop() {
     }
   }
   catch( ... ) {
-    printf("Unexpected error in runLoop");
+    printf("Unexpected error in runLoop\n");
+    exit(1);
   }
 }
 
@@ -81,14 +82,9 @@ int main(int argc, char *argv[])
 
   for (int i=1; i<argc; i++)
   {
-    //printf("arg[%d]=\"%s\"\n",i,argv[i]);
-    // use path of selected source file as temp working directory
-    //SetCurrentDir(ExtractFilePath(Active->Project.CurrentFile));
-
     if (strncmp(argv[i],"--print-registers",17)==0) {printRegistersFlag = true; continue;}
     if (strncmp(argv[i],"--no-print-registers",20)==0) {printRegistersFlag = false; continue;}
 
-    // Check for --D<number>=<value> format
     if (strncmp(argv[i], "--D", 3) == 0) {
       char *equalsPos = strchr(argv[i], '=');
       if (equalsPos && equalsPos[1] >= '0' && equalsPos[1] <= '7') {
@@ -102,7 +98,6 @@ int main(int argc, char *argv[])
       }
     }
 
-    // Check for --A<number>=<value> format
     if (strncmp(argv[i], "--A", 3) == 0) {
       char *equalsPos = strchr(argv[i], '=');
       if (equalsPos && equalsPos[1] >= '0' && equalsPos[1] <= '7') {
