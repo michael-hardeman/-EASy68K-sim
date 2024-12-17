@@ -15,8 +15,9 @@ It shouldn't be too much work to add that stuff back if you're willing to take a
 Disclaimer
 ----------
 
-This code is very newly written and has not been thoroughly tested. Don't rely on it and contriubte fixes back if you find bugs. :)
-
+This code is very newly written and has not been thoroughly tested.
+Don't rely on it.
+Please contribute fixes back if you find bugs. :)
 
 Building
 --------
