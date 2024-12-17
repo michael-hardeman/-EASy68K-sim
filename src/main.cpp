@@ -52,14 +52,14 @@ void runLoop() {
 
 void help(void)
 {
-  fprintf(stderr, "asy68k cli 68000 simulator Version %d based on source code from http://www.easy68k.com/\n", VERSION);
+  fprintf(stderr, "asy68k cli 68000 simulator Version %#010x based on source code from http://www.easy68k.com/\n", VERSION);
   fprintf(stderr, "Distributed under the GNU General Public Use License. The software is not warranted in any way. Use at your own risk.\n");
   fprintf(stderr, "\nPorted to the *nix CLI so it can be used in a Makefile workflow w/o WINE by Michael Hardeman December 2024\n\n");
   fprintf(stderr, "Usage:\n   asy68ksim {options} file1.S68 {file2.S68} ... {fileN.S68}\n\n");
   fprintf(stderr, "(Options with \"default:\" are enabled, use --no-{option} to turn off, i.e. --no-list)\n");
   fprintf(stderr, "--print-registers       default: log registers to stdout after program is run\n");
   fprintf(stderr, "--{register}={value}             test register for the supplied value. exit with error code if test failed.\n");
-  fprintf(stderr, "                                 Valid registers are D0-8, A0-8, PC, and SR\n");
+  fprintf(stderr, "                                 Valid registers are D0-8, A0-9, PC, and SR\n");
   fprintf(stderr, "\n");
 }
 
@@ -72,10 +72,10 @@ struct RegisterTest {
 int main(int argc, char *argv[])
 {
   bool printRegistersFlag = true; // prints the register contents to stdout
-  RegisterTest D_TESTS[D_REGS];
-  RegisterTest A_TESTS[A_REGS];
-  RegisterTest PC_TEST;
-  RegisterTest SR_TEST;
+  RegisterTest D_Tests[D_REGS];
+  RegisterTest A_Tests[A_REGS];
+  RegisterTest PC_Test;
+  RegisterTest SR_Test;
   bool testFailure = false;
 
   if (argc == 1)  {help(); exit(0);}
@@ -89,8 +89,8 @@ int main(int argc, char *argv[])
       char *equalsPos = strchr(argv[i], '=');
       if (equalsPos && equalsPos[1] >= '0' && equalsPos[1] <= '7') {
         int regIndex = argv[i][3] - '0';
-        D_TESTS[regIndex].enabled = true;
-        D_TESTS[regIndex].expected = atoi(equalsPos + 1);
+        D_Tests[regIndex].enabled = true;
+        D_Tests[regIndex].expected = atoi(equalsPos + 1);
         continue;
       } else {
         fprintf(stderr, "Invalid --D argument. Usage: --D<number>=<value> where <number> is 0-7.\n");
@@ -102,8 +102,8 @@ int main(int argc, char *argv[])
       char *equalsPos = strchr(argv[i], '=');
       if (equalsPos && equalsPos[1] >= '0' && equalsPos[1] <= '7') {
         int regIndex = argv[i][3] - '0';
-        A_TESTS[regIndex].enabled = true;
-        A_TESTS[regIndex].expected = atoi(equalsPos + 1);
+        A_Tests[regIndex].enabled = true;
+        A_Tests[regIndex].expected = atoi(equalsPos + 1);
         continue;
       } else {
         fprintf(stderr, "Invalid --A argument. Usage: --A<number>=<value> where <number> is 0-7.\n");
@@ -113,14 +113,14 @@ int main(int argc, char *argv[])
 
     if (strncmp(argv[i], "--PC=", 5) == 0) {
       char *equalsPos = strchr(argv[i], '=');
-      PC_TEST.enabled = true;
-      PC_TEST.expected = atoi(equalsPos + 1);
+      PC_Test.enabled = true;
+      PC_Test.expected = atoi(equalsPos + 1);
     }
 
     if (strncmp(argv[i], "--SR=", 5) == 0) {
       char *equalsPos = strchr(argv[i], '=');
-      SR_TEST.enabled = true;
-      SR_TEST.expected = atoi(equalsPos + 1);
+      SR_Test.enabled = true;
+      SR_Test.expected = atoi(equalsPos + 1);
     }
 
     if (argv[i][0]=='-') {help(); fprintf(stderr,"\n\nUnknown option \"%s\"",argv[i]); exit(1);}
@@ -146,33 +146,33 @@ int main(int argc, char *argv[])
       }
 
       for (int j=0; j<D_REGS; j++ ) {
-        if (D_TESTS[j].enabled) {
-          if (D[j] != D_TESTS[j].expected) {
-            fprintf(stderr,"D%d Test failed! Expected: %d Actual: %d\n", j, D_TESTS[j].expected, D[j]);
+        if (D_Tests[j].enabled) {
+          if (D[j] != D_Tests[j].expected) {
+            fprintf(stderr,"D%d Test failed! Expected: %d Actual: %d\n", j, D_Tests[j].expected, D[j]);
             testFailure = true;
           }
         }
       }
 
       for (int j=0; j<A_REGS; j++ ) {
-        if (A_TESTS[j].enabled) {
-          if (A[j] != A_TESTS[j].expected) {
-            fprintf(stderr,"A%d Test failed! Expected: %d Actual: %d\n", j, A_TESTS[j].expected, A[j]);
+        if (A_Tests[j].enabled) {
+          if (A[j] != A_Tests[j].expected) {
+            fprintf(stderr,"A%d Test failed! Expected: %d Actual: %d\n", j, A_Tests[j].expected, A[j]);
             testFailure = true;
           }
         }
       }
 
-      if (PC_TEST.enabled) {
-        if (PC != PC_TEST.expected) {
-          fprintf(stderr,"PC Test failed! Expected: %d Actual %d\n", PC_TEST.expected, PC);
+      if (PC_Test.enabled) {
+        if (PC != PC_Test.expected) {
+          fprintf(stderr,"PC Test failed! Expected: %d Actual %d\n", PC_Test.expected, PC);
           testFailure = true;
         }
       }
 
-      if (SR_TEST.enabled) {
-        if (SR != SR_TEST.expected) {
-          fprintf(stderr,"SR Test failed! Expected: %d Actual: %d\n", SR_TEST.expected, SR);
+      if (SR_Test.enabled) {
+        if (SR != SR_Test.expected) {
+          fprintf(stderr,"SR Test failed! Expected: %d Actual: %d\n", SR_Test.expected, SR);
           testFailure = true;
         }
       }
