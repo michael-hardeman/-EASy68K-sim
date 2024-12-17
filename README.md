@@ -34,10 +34,10 @@ Distributed under the GNU General Public Use License. The software is not warran
 
 Ported to the *nix CLI so it can be used in a Makefile workflow w/o WINE by Michael Hardeman December 2024
 
-Usage:
-   asy68ksim {options} file1.S68 {file2.S68} ... {fileN.S68}
+    Usage:
+    asy68ksim {options} file1.S68 {file2.S68} ... {fileN.S68}
 
-(Options with "default:" are enabled, use --no-{option} to turn off, i.e. --no-list)
+    (Options with "default:" are enabled, use --no-{option} to turn off, i.e. --no-list)
     --print-registers       default: log registers to stdout after program is run
     --{register}={value}             test register for the supplied value. exit with error code if test failed.
                                      Valid registers are D0-8, A0-8, PC, and SR
