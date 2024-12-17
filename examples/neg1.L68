@@ -1,0 +1,38 @@
+00001000 Starting Address
+Assembler used: ASy68K Assembler v5.15.04
+Created On: Sat Dec 14 22:16:16 2024
+
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  ; first instruction of program
+00001000                             9  
+00001000                            10  * Put program code here
+00001000  303C 0001                 11          MOVE #1,D0
+00001004  3F00                      12          MOVE D0,-(SP)
+00001006  303C 0001                 13          MOVE #1,D0
+0000100A  D05F                      14          ADD (SP)+,D0
+0000100C  3F00                      15          MOVE D0,-(SP)
+0000100E  303C 0003                 16          MOVE #3,D0
+00001012  905F                      17          SUB (SP)+,D0
+00001014  4440                      18          NEG D0
+00001016                            19  
+00001016  FFFF FFFF                 20      SIMHALT             ; halt simulator
+0000101A                            21  
+0000101A                            22  * Put variables and constants here
+0000101A                            23  
+0000101A                            24      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000

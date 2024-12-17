@@ -26,3 +26,32 @@ Uninstall
 ---------
 
     sudo make uninstall
+
+Usage
+-----
+asy68k cli 68000 simulator Version 331777 based on source code from http://www.easy68k.com/
+Distributed under the GNU General Public Use License. The software is not warranted in any way. Use at your own risk.
+
+Ported to the *nix CLI so it can be used in a Makefile workflow w/o WINE by Michael Hardeman December 2024
+
+Usage:
+   asy68ksim {options} file1.S68 {file2.S68} ... {fileN.S68}
+
+(Options with "default:" are enabled, use --no-{option} to turn off, i.e. --no-list)
+    --print-registers       default: log registers to stdout after program is run
+    --{register}={value}             test register for the supplied value. exit with error code if test failed.
+                                     Valid registers are D0-8, A0-8, PC, and SR
+
+Running Tests
+-------------
+You can automate testing for example running:
+
+    ./asy68ksim --no-print-registers --D0=65535 examples/neg1.S68
+
+will execute successfully. but running:
+
+    ./asy68ksim --no-print-registers --D0=65534 examples/neg1.S68
+
+will cause the program to exit unsuccessfully with the message:
+
+    D0 Test failed! Expected: 65534 Actual: 65535
