@@ -12,6 +12,12 @@ This application is good enough for my needs so I stopped here.
 
 It shouldn't be too much work to add that stuff back if you're willing to take a shot.
 
+Disclaimer
+----------
+
+This code is very newly written and has not been thoroughly tested. Don't rely on it and contriubte fixes back if you find bugs. :)
+
+
 Building
 --------
 
@@ -49,8 +55,3 @@ will execute successfully. but running:
 will cause the program to exit unsuccessfully with the message:
 
     D0 Test failed! Expected: 65534 Actual: 65535
-
-Disclaimer
-----------
-
-This code is very very newly written and has not been thoroughly tested.
